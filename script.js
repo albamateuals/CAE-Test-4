@@ -146,7 +146,11 @@ function bindAccessScreen() {
     const input = document.querySelector("[data-access-password]");
     if (input && input.value === ACCESS_PASSWORD) {
       sessionStorage.setItem(ACCESS_KEY, "granted");
-      render();
+      appState.screen = "start";
+      appState.paper = null;
+      appState.part = null;
+      saveState();
+      renderStartScreen();
       return;
     }
     renderAccessScreen("Incorrect password. Please try again.");
