@@ -211,13 +211,13 @@ function renderPart(part) {
 
 const renderer = {
   multipleCloze(part) {
-    return `<article class="reading-text">${part.text.map((p) => `<p>${withChoiceGaps(p, part.questions)}</p>`).join("")}</article>`;
+    return `<article class="reading-text">${textBlocks(part.text).map((p) => `<p>${withChoiceGaps(p, part.questions)}</p>`).join("")}</article>`;
   },
   openCloze(part) {
-    return `<article class="reading-text">${part.text.map((p) => `<p>${withTextGaps(p)}</p>`).join("")}</article>`;
+    return `<article class="reading-text">${textBlocks(part.text).map((p) => `<p>${withTextGaps(p)}</p>`).join("")}</article>`;
   },
   wordFormation(part) {
-    return `<article class="reading-text">${part.text.map((p) => `<p>${withTextGaps(p, true, part.questions)}</p>`).join("")}</article>`;
+    return `<article class="reading-text">${textBlocks(part.text).map((p) => `<p>${withTextGaps(p, true, part.questions)}</p>`).join("")}</article>`;
   },
   transformations(part) {
     return `<div class="transform-list">${part.questions.map((item) => `
@@ -265,6 +265,10 @@ const renderer = {
       </div>`;
   }
 };
+
+function textBlocks(text) {
+  return Array.isArray(text) ? text : String(text || "").split(/\n{2,}/).filter(Boolean);
+}
 
 function updateListeningPlayer(paper) {
   let host = document.getElementById("globalListeningPlayer");
